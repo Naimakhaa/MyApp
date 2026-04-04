@@ -3,7 +3,7 @@ import * as model from "../models/mahasiswaModel";
 
 // LIST
 export const index = async (c) => {
-    const data = model.getAll();
+    const data = await model.getAll();
     const success = c.req.query("success");
     const error = c.req.query("error");
 
@@ -37,7 +37,7 @@ export const store = async (c) => {
         return c.redirect("/mahasiswa/create?error=Semua field wajib diisi");
     }
 
-    model.create({
+    await model.create({
         nama: body.nama,
         nim: body.nim,
     });
@@ -48,7 +48,7 @@ export const store = async (c) => {
 // FORM EDIT
 export const editForm = async (c) => {
     const id = c.req.param("id");
-    const data = model.getById(id);
+    const data = await model.getById(id);
     const error = c.req.query("error");
 
     return c.html(
@@ -69,7 +69,7 @@ export const updateData = async (c) => {
         return c.redirect(`/mahasiswa/edit/${id}?error=Field tidak boleh kosong`);
     }
 
-    model.update(id, {
+    await model.update(id, {
         nama: body.nama,
         nim: body.nim,
     });
@@ -80,6 +80,6 @@ export const updateData = async (c) => {
 // DELETE
 export const destroy = async (c) => {
     const id = c.req.param("id");
-    model.remove(id);
+    await model.remove(id);
     return c.redirect("/mahasiswa?success=Data berhasil dihapus");
 };
