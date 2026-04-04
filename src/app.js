@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import router from "./routes/web";
 import { serveStatic } from "hono/bun";
+
 const app = new Hono();
 // static file (CSS)
 app.use("/css/*", serveStatic({ root: "./src/public" }));
