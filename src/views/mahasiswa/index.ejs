@@ -1,0 +1,102 @@
+<div class="bg-white p-6 rounded-2xl shadow">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold">Data Mahasiswa</h2>
+        <a href="/mahasiswa/create" class="bg-blue-500 text-white px-4 py-2 rounded">
+            + Tambah
+        </a>
+    </div>
+
+    <% if (success && success.trim() !=="" ) { %>
+        <div id="successAlert"
+            class="bg-green-600 text-white px-4 py-3 rounded-lg mb-3 transition-opacity duration-500">
+            <%= success %>
+        </div>
+        <% } %>
+
+            <% if (error && error.trim() !=="" ) { %>
+                <div id="errorAlert"
+                    class="bg-red-600 text-white px-4 py-3 rounded-lg mb-4 transition-opacity duration-500">
+                    <%= error %>
+                </div>
+                <% } %>
+
+                    <table class="w-full border-collapse border border-gray-200">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="border p-2">No</th>
+                                <th class="border p-2">Nama</th>
+                                <th class="border p-2">NIM</th>
+                                <th class="border p-2">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (mahasiswa && mahasiswa.length> 0) { %>
+                                <% mahasiswa.forEach((m, index)=> { %>
+                                    <tr>
+                                        <td class="border p-2">
+                                            <%= index + 1 %>
+                                        </td>
+                                        <td class="border p-2">
+                                            <%= m.nama %>
+                                        </td>
+                                        <td class="border p-2">
+                                            <%= m.nim %>
+                                        </td>
+                                        <td class="border p-2">
+                                            <a href="/mahasiswa/edit/<%= m.id %>" class="text-yellow-600 mr-3">Edit</a>
+                                            <a href="#" onclick="confirmDelete('/mahasiswa/delete/<%= m.id %>')"
+                                                class="text-red-600">
+                                                Hapus
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                                        <% } else { %>
+                                            <tr>
+                                                <td colspan="4" class="border p-4 text-center text-gray-500">
+                                                    Data mahasiswa belum ada
+                                                </td>
+                                            </tr>
+                                            <% } %>
+                        </tbody>
+                    </table>
+</div>
+
+<script>
+    const successAlert = document.getElementById("successAlert");
+    if (successAlert) {
+        setTimeout(() => {
+            successAlert.style.opacity = "0";
+            setTimeout(() => {
+                successAlert.remove();
+            }, 500);
+        }, 3000); // 3 detik
+    }
+
+    const errorAlert = document.getElementById("errorAlert");
+    if (errorAlert) {
+        setTimeout(() => {
+            errorAlert.style.opacity = "0";
+            setTimeout(() => {
+                errorAlert.remove();
+            }, 500);
+        }, 3000); // 3 detik
+    }
+
+    function confirmDelete(url) {
+        Swal.fire({
+            title: 'Yakin?',
+            text: 'Data akan dihapus permanen!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal',
+            confirmButtonColor: '#dc2626',
+            cancelButtonColor: '#6b7280'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = url;
+            }
+        });
+    }
+</script>
