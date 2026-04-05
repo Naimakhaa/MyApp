@@ -24,11 +24,25 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td class="border p-2">1</td>
-        <td class="border p-2">Budi</td>
-        <td class="border p-2">12345</td>
-      </tr>
+      <% if (mahasiswa && mahasiswa.length> 0) { %>
+        <% mahasiswa.forEach((m, index)=> { %>
+          <tr>
+            <td class="border p-2">
+              <%= index + 1 %>
+            </td>
+            <td class="border p-2">
+              <%= m.nama %>
+            </td>
+            <td class="border p-2">
+              <%= m.nim %>
+            </td>
+          </tr>
+          <% }) %>
+            <% } else { %>
+              <tr>
+                <td colspan="3" class="border p-2 text-center">Belum ada data</td>
+              </tr>
+              <% } %>
     </tbody>
   </table>
 </div>
